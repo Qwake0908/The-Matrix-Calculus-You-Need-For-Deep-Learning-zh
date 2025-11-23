@@ -71,7 +71,7 @@
 这样的计算单元有时被称为“人工神经元”，其形式如下：
 
 \begin{center}
-\includegraphics{neuron.png}
+\includegraphics{fig/neuron.png}
 \end{center}
 
 神经网络由许多这样的单元组成，这些单元被组织成称为{\em 层}的多个神经元集合。一层单元的激活值成为下一层单元的输入。最终层中单元或单元的激活值称为网络输出。
@@ -565,7 +565,7 @@ J_\mathbf{x} =
 另一种思考单变量链式法则的方式是将整体表达式可视化为数据流图或操作链（或编译器人员的抽象语法树）：
 
 \begin{center}
-\includegraphics{sin-square.png}
+\includegraphics{fig/sin-square.png}
 \end{center}
 
 函数参数 $x$ 的变化通过平方操作传递，然后再通过 $sin$ 操作传递，从而改变结果 $y$。你可以将 $\frac{du}{dx}$ 看作是从 $x$ 到 $u$ 的变化，将 $\frac{dy}{du}$ 看作是从 $u$ 到 $y$ 的变化。从 $x$ 到 $y$ 需要一个中间步骤。按照惯例，链式法则通常从输出变量写到参数，即 $\frac{dy}{dx} = \frac{dy}{du} \frac{du}{dx}$。但是，如果我们反过来，使用等效的 $\frac{dy}{dx} = \frac{du}{dx}\frac{dy}{du}$，则从 $x$ 到 $y$ 的视角会更清晰。
@@ -624,7 +624,7 @@ $\frac{dy}{dx} = \frac{du}{dx}\frac{dy}{du}$ & $\frac{dy}{dx} = \frac{dy}{du} \f
 以下是数据流从 $x$ 到 $y$ 通过操作链的可视化：
 
 \begin{center}
-\includegraphics{chain-tree.png}
+\includegraphics{fig/chain-tree.png}
 \end{center}
 
 到目前为止，我们可以使用链式法则来求解单变量 $x$ 的嵌套表达式的导数，但仅当 $x$ 通过单一数据流路径影响 $y$ 时适用。要处理更复杂的表达式，我们需要扩展我们的技术，这将在下一节进行。
@@ -648,13 +648,13 @@ $\frac{dy}{dx} = \frac{du}{dx}\frac{dy}{du}$ & $\frac{dy}{dx} = \frac{dy}{du} \f
 \begin{array}{lllllllll}
  \frac{\partial u_1(x)}{\partial x} &=& 2x &&&(\text{与 }\frac{du_1(x)}{dx}\text{相同})\\
  \frac{\partial u_2(x,u_1)}{\partial u_1} &=& \frac{\partial }{\partial u_1}(x + u_1) = 0 + 1 = 1\\
- \frac{\partial u_2(x,u_1)}{\partial x} &\includegraphics[scale=.012]{not-equal-icon.png}& \frac{\partial }{\partial x}(x + u_1) = 1 + 0 = 1 & & &(\text{这里有点不对劲!})
+ \frac{\partial u_2(x,u_1)}{\partial x} &\includegraphics{fig/not-equal-icon.png}& \frac{\partial }{\partial x}(x + u_1) = 1 + 0 = 1 & & &(\text{这里有点不对劲!})
 \end{array}
 \]
 哦不！偏导数 $\frac{\partial u_2(x,u_1)}{\partial x}$ 是错的，因为它违反了偏导数的一个关键假设。在对 $x$ 求偏导数时，其他变量必须不随 $x$ 变化。显然，$u_1(x) = x^2$ 是 $x$ 的函数，并且会随着 $x$ 变化。$\frac{\partial u_2(x,u_1)}{\partial x} \neq 1 + 0$ 因为 $\frac{\partial u_1(x)}{\partial x} \neq 0$。快速看一下 $y = u_2(x,u_1)$ 的数据流图，可以看到从 $x$ 到 $y$ 有多个路径，显然需要考虑 $x$ 的直接和间接（通过 $u_1(x)$）依赖：
 
 \begin{center}
-\includegraphics{plus-square.png}
+\includegraphics{fig\plus-square.png}
 \end{center}
 
 $x$ 的变化会影响 $y$，既是加法的操作数，也是平方操作的操作数。以下方程描述了 $x$ 的微小变化如何影响输出：
@@ -1288,7 +1288,7 @@ b & condition_2\\
 
 在寻找网络资源时，请搜索“矩阵微积分”而不是“向量微积分”。以下是来自 \href{https://www.google.com/search?q=matrix+calculus\&oq=matrix+calculus}{Google 搜索} 的 top 链接的一些评论：
 \begin{itemize}
-\item \href{https://en.wikipedia.org/wiki/Matrix_calculus}{https://en.wikipedia.org/wiki/Matrix_calculus}
+\item \href{https://en.wikipedia.org/wiki/Matrix\_calculus}{https://en.wikipedia.org/wiki/Matrix\_calculus}
 Wikipedia 的词条实际上相当好，他们对不同的布局约定有很好的描述。请记住，我们使用分子布局，其中变量水平排列，函数垂直排列在雅可比矩阵中。Wikipedia 对 \href{https://en.wikipedia.org/wiki/Total_derivative}{全导数} 也有很好的描述，但要注意他们使用的符号与我们稍有不同。我们始终使用 $\partial x$ 符号而不是 $dx$。
 \item \href{http://www.ee.ic.ac.uk/hp/staff/dmb/matrix/calculus.html}{http://www.ee.ic.ac.uk/hp/staff/dmb/matrix/calculus.html}
 该页面有一个关于矩阵微分的章节，包含一些有用的恒等式；这个人使用分子布局。读完本文后，这可能是一个学习矩阵与向量微分的好地方。

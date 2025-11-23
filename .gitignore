@@ -1,0 +1,39 @@
+# TeX编译生成的中间文件
+*.aux
+*.log
+*.out
+*.synctex.gz
+*.toc
+*.bbl
+*.blg
+*.fls
+*.fdb_latexmk
+*.glo
+*.idx
+*.ilg
+*.ind
+*.ist
+*.lof
+*.lot
+*.maf
+*.mtc
+*.mtc0
+*.nav
+*.nlo
+*.snm
+*.svn
+*.swp
+*.synctex(busy)
+*.swo
+*~
+
+# 不要忽略源文件和PDF
+!.tex
+!.pdf
+
+# 保留图片文件
+!.png
+!.jpg
+!.jpeg
+!.gif
+!.svg
