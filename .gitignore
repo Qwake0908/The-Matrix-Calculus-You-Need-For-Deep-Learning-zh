@@ -5,6 +5,7 @@
 *.synctex.gz
 *.toc
 *.bbl
+*.xdv
 *.blg
 *.fls
 *.fdb_latexmk
