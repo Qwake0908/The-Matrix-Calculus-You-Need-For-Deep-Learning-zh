@@ -46,6 +46,7 @@
 
 \href{http://explained.ai/matrix-calculus/index.html}{HTML 版本} (PDF 和 HTML 均通过 \href{https://github.com/parrt/bookish}{bookish} 标记语言生成)
 
+中文翻译版本不完全基于英文版本，中文版本在文本中添加了部分额外解释并调整了公式的部分格式，例如微分的$d$与$\diff$的字体调整。
 
 \begin{abstract}
 
@@ -76,11 +77,11 @@
 
 神经网络由许多这样的单元组成，这些单元被组织成称为{\em 层}的多个神经元集合。某一层单元的激活值会成为下一层单元的输入。最后一层中一个或多个单元的激活值被称为网络输出。
 
-{\em 训练}这样的神经元意味着选择合适的权重 $\mathbf{w}$ 和偏置 $b$，使得对于所有 $N$ 个输入向量 $\mathbf{x}$，我们都能得到期望的输出。为了实现这一目标，我们最小化一个{\em 损失函数}，它将网络的最终输出 $activation(\mathbf{x})$ 与 输入所有 $\mathbf{x}$ 的期望输出$target(\mathbf{x})$ 进行比较。为了最小化损失，我们会使用梯度下降的一些变体，如普通的\href{https://en.wikipedia.org/wiki/Stochastic_gradient_descent}{随机梯度下降} （SGD）、带动量的 SGD，或\href{https://en.wikipedia.org/wiki/Stochastic_gradient_descent\#Adam}{Adam 算法}。所有这些方法都需要 $activation(\mathbf{x})$ 关于模型参数 $\mathbf{w}$ 和 $b$ 的偏导数（梯度）。我们的目标是逐渐调整 $\mathbf{w}$ 和 $b$，使得整体损失函数在所有 $\mathbf{x}$ 输入上不断减小。
+{\em 训练}这样的神经元意味着选择合适的权重 $\mathbf{w}$ 和偏置 $b$，使得对于所有 $N$ 个输入向量 $\mathbf{x}$，我们都能得到期望的输出。为了实现这一目标，我们最小化一个{\em 损失函数}，它将网络的最终输出 $\mathrm{activation}(\mathbf{x})$ 与 输入所有 $\mathbf{x}$ 的期望输出$\text{target}(\mathbf{x})$ 进行比较。为了最小化损失，我们会使用梯度下降的一些变体，如普通的\href{https://en.wikipedia.org/wiki/Stochastic_gradient_descent}{随机梯度下降} （SGD）、带动量的 SGD，或\href{https://en.wikipedia.org/wiki/Stochastic_gradient_descent\#Adam}{Adam 算法}。所有这些方法都需要 $\mathrm{activation}(\mathbf{x})$ 关于模型参数 $\mathbf{w}$ 和 $b$ 的偏导数（梯度）。我们的目标是逐渐调整 $\mathbf{w}$ 和 $b$，使得整体损失函数在所有 $\mathbf{x}$ 输入上不断减小。
 
 如果我们足够仔细，我们可以通过对常见损失函数（均方误差）的标量形式求导来得到梯度：
 \[
-\frac{1}{N} \sum_{\mathbf{x}} (target(\mathbf{x}) - activation(\mathbf{x}))^2 = \frac{1}{N} \sum_{\mathbf{x}} (target(\mathbf{x}) - \max(0, \sum_i^{|x|} w_i x_i + b))^2
+\frac{1}{N} \sum_{\mathbf{x}} (\text{target}(\mathbf{x}) - \mathrm{activation}(\mathbf{x}))^2 = \frac{1}{N} \sum_{\mathbf{x}} (\text{target}(\mathbf{x}) - \max(0, \sum_i^{|x|} w_i x_i + b))^2
 \]
 
 但这仅仅是针对单个神经元，而神经网络必须同时训练所有层中所有神经元的权重和偏置。由于存在多个输入和（可能的）多个网络输出，我们确实需要关于函数对向量求导的通用规则，甚至是向量值函数对向量求导的规则。
@@ -382,16 +383,16 @@ J_\mathbf{x} =
 更简洁地，我们可以写成：
 
 \[
-\frac{\partial \mathbf{y}}{\partial \mathbf{w}} = diag \left( \frac{\partial}{\partial w_1}(f_{1}(w_1) \bigcirc g_{1}(x_1)),~ \frac{\partial}{\partial w_2}(f_{2}(w_2) \bigcirc g_{2}(x_2)),~ \ldots,~ \frac{\partial}{\partial w_n}(f_{n}(w_n) \bigcirc g_{n}(x_n)) \right)
+\frac{\partial \mathbf{y}}{\partial \mathbf{w}} =\mathrm{diag} \left( \frac{\partial}{\partial w_1}(f_{1}(w_1) \bigcirc g_{1}(x_1)),~ \frac{\partial}{\partial w_2}(f_{2}(w_2) \bigcirc g_{2}(x_2)),~ \ldots,~ \frac{\partial}{\partial w_n}(f_{n}(w_n) \bigcirc g_{n}(x_n)) \right)
 \]
 
 和
 
 \[
-\frac{\partial \mathbf{y}}{\partial \mathbf{x}} = diag \left( \frac{\partial}{\partial x_1}(f_{1}(w_1) \bigcirc g_{1}(x_1)),~ \frac{\partial}{\partial x_2}(f_{2}(w_2) \bigcirc g_{2}(x_2)),~ \ldots,~ \frac{\partial}{\partial x_n}(f_{n}(w_n) \bigcirc g_{n}(x_n)) \right)
+\frac{\partial \mathbf{y}}{\partial \mathbf{x}} = \mathrm{diag} \left( \frac{\partial}{\partial x_1}(f_{1}(w_1) \bigcirc g_{1}(x_1)),~ \frac{\partial}{\partial x_2}(f_{2}(w_2) \bigcirc g_{2}(x_2)),~ \ldots,~ \frac{\partial}{\partial x_n}(f_{n}(w_n) \bigcirc g_{n}(x_n)) \right)
 \]
 
-其中 $diag(\mathbf{x})$ 表示一个对角矩阵，其对角线元素取自向量 $\mathbf{x}$。
+其中 $\mathrm{diag}(\mathbf{x})$ 表示一个对角矩阵，其对角线元素取自向量 $\mathbf{x}$。
 
 由于我们经常进行简单的向量算术运算，因此在二元逐元素运算中，一般的函数 $\mathbf{f(w)}$ 往往就是向量 $\mathbf{w}$ 本身。每当一般的函数是一个向量时，我们知道 $f_i(\mathbf{w})$ 可以简化为 $f_i(w_i) = w_i$。例如，向量加法 $\mathbf{w + x}$ 满足逐元素对角条件，因为 $\mathbf{f(w)} + \mathbf{g(x)}$ 的标量方程 $y_i = f_i(\mathbf{w}) + g_i(\mathbf{x})$ 可以简化为 $y_i = f_i(w_i) + g_i(x_i) = w_i + x_i$，其偏导数为：
 
@@ -410,10 +411,10 @@ J_\mathbf{x} =
 \[
 \begin{array}{lllllllll}
         \text{\bf{运算}} &  & {\text{\bf 关于 }} \mathbf{w} \text{ 的偏导数} \\
-        + &  & \frac{\partial (\mathbf{w+x})}{\partial \mathbf{w}} = diag(\ldots \frac{\partial (w_i + x_i)}{\partial w_i} \ldots) = diag(\vec{1}) = I \\\\
-        - &  & \frac{\partial (\mathbf{w-x})}{\partial \mathbf{w}}  =  diag(\ldots\frac{\partial (w_i - x_i)}{\partial w_i}\ldots) =  diag(\vec{1})  =  I \\\\
-        \otimes &  & \frac{\partial (\mathbf{w \otimes x})}{\partial \mathbf{w}}  =  diag(\ldots\frac{\partial (w_i \times x_i)}{\partial w_i} \ldots)  =  diag(\mathbf{x}) \\\\
-        \oslash &  & \frac{\partial (\mathbf{w \oslash x})}{\partial \mathbf{w}}  =  diag(\ldots\frac{\partial (w_i / x_i)}{\partial w_i}\ldots)  =  diag(\ldots \frac{1}{x_i} \ldots) \\\\
+        + &  & \frac{\partial (\mathbf{w+x})}{\partial \mathbf{w}} = \mathrm{diag}(\ldots \frac{\partial (w_i + x_i)}{\partial w_i} \ldots) = \mathrm{diag}(\vec{1}) = I \\\\
+        - &  & \frac{\partial (\mathbf{w-x})}{\partial \mathbf{w}}  =  \mathrm{diag}(\ldots\frac{\partial (w_i - x_i)}{\partial w_i}\ldots) =  \mathrm{diag}(\vec{1})  =  I \\\\
+        \otimes &  & \frac{\partial (\mathbf{w \otimes x})}{\partial \mathbf{w}}  =  \mathrm{diag}(\ldots\frac{\partial (w_i \times x_i)}{\partial w_i} \ldots)  =  \mathrm{diag}(\mathbf{x}) \\\\
+        \oslash &  & \frac{\partial (\mathbf{w \oslash x})}{\partial \mathbf{w}}  =  \mathrm{diag}(\ldots\frac{\partial (w_i / x_i)}{\partial w_i}\ldots)  =  \mathrm{diag}(\ldots \frac{1}{x_i} \ldots) \\\\
 \end{array}
 \]
 
@@ -421,9 +422,9 @@ J_\mathbf{x} =
 \begin{array}{lllllllll}
         \text{\bf{运算}} &  &  {\text{\bf 关于 }}\mathbf{x} \text{ 的偏导数}\\
         + &  & \frac{\partial (\mathbf{w+x})}{\partial \mathbf{x}} =  I\\\\
-        - &  & \frac{\partial (\mathbf{w-x})}{\partial \mathbf{x}}  =  diag(\ldots\frac{\partial (w_i - x_i)}{\partial x_i}\ldots)  =  diag(-\vec{1})  =  -I \\\\
-        \otimes &  &  \frac{\partial (\mathbf{w \otimes x})}{\partial \mathbf{x}}  =  diag(\mathbf{w})\\\\
-        \oslash &  &  \frac{\partial (\mathbf{w \oslash x})}{\partial \mathbf{x}}  =  diag(\ldots \frac{-w_i}{x_i^2} \ldots)\\
+        - &  & \frac{\partial (\mathbf{w-x})}{\partial \mathbf{x}}  =  \mathrm{diag}(\ldots\frac{\partial (w_i - x_i)}{\partial x_i}\ldots)  =  \mathrm{diag}(-\vec{1})  =  -I \\\\
+        \otimes &  &  \frac{\partial (\mathbf{w \otimes x})}{\partial \mathbf{x}}  =  \mathrm{diag}(\mathbf{w})\\\\
+        \oslash &  &  \frac{\partial (\mathbf{w \oslash x})}{\partial \mathbf{x}}  =  \mathrm{diag}(\ldots \frac{-w_i}{x_i^2} \ldots)\\
 \end{array}
 \]
 
@@ -435,12 +436,12 @@ J_\mathbf{x} =
 当我们对向量进行标量乘法或加法时，我们隐式地将标量扩展为向量，然后进行逐元素的二元运算。例如，将标量 $z$ 加到向量 $\mathbf{x}$ 上，即 $\mathbf{y} = \mathbf{x} + z$，实际上是 $\mathbf{y} = \mathbf{f(x)} + \mathbf{g}(z)$，其中 $\mathbf{f(x)} = \mathbf{x}$ 和 $\mathbf{g}(z) = \vec{1} z$。（符号 $\vec{1}$ 表示适当长度的全1向量。）$z$ 是不依赖于 $\mathbf{x}$ 的任意标量，这很有用，因为对于任何 $x_i$，都有 $\frac{\partial z}{\partial x_i} = 0$，从而简化我们的偏导数计算。（在这里，可以把变量 $z$ 看作常数。）类似地，标量乘法 $\mathbf{y} = \mathbf{x} z$ 实际上是 $\mathbf{y} = \mathbf{f(x)} \otimes \mathbf{g}(z) = \mathbf{x} \otimes \vec{1}z$，其中 $\otimes$ 是两个向量的逐元素乘法（Hadamard积）。
 
 向量标量加法和乘法关于向量 $\mathbf{x}$ 的偏导数使用我们的逐元素规则：
-\[ \frac{\partial \mathbf{y}}{\partial \mathbf{x}} = diag \left( \ldots \frac{\partial}{\partial x_i} ( f_i(x_i) \bigcirc g_i(z) ) \ldots \right) \]
+\[ \frac{\partial \mathbf{y}}{\partial \mathbf{x}} = \mathrm{diag} \left( \ldots \frac{\partial}{\partial x_i} ( f_i(x_i) \bigcirc g_i(z) ) \ldots \right) \]
 这是因为函数 $\mathbf{f(x)} = \mathbf{x}$ 和 $\mathbf{g}(z) = \vec{1} z$ 明显满足雅可比矩阵的逐元素对角线条件（即 $f_i(\mathbf{x})$ 最多依赖于 $x_i$，而 $g_i(z)$ 依赖于 $\vec{1}z$ 向量的第 $i$ 个值）。
 
 根据标量偏导数的常规规则，我们得到了向量标量加法的雅可比矩阵的对角线元素：
 \[ \frac{\partial}{\partial x_i} ( f_i(x_i) + g_i(z) ) = \frac{\partial (x_i + z)}{\partial x_i} = \frac{\partial x_i}{\partial x_i} + \frac{\partial z}{\partial x_i} = 1 + 0 = 1 \]
-因此，$\frac{\partial}{\partial \mathbf{x}} ( \mathbf{x} + z ) = diag(\vec{1}) = I$。
+因此，$\frac{\partial}{\partial \mathbf{x}} ( \mathbf{x} + z ) = \mathrm{diag}(\vec{1}) = I$。
 
 然而，关于标量参数 $z$ 的偏导数是一个垂直向量，而不是对角矩阵。向量的元素为：
 \[ \frac{\partial}{\partial z} ( f_i(x_i) + g_i(z) ) = \frac{\partial (x_i + z)}{\partial z} = \frac{\partial x_i}{\partial z} + \frac{\partial z}{\partial z} = 0 + 1 = 1 \]
@@ -448,7 +449,7 @@ J_\mathbf{x} =
 
 向量标量乘法的雅可比矩阵的对角线元素涉及标量导数的乘积法则：
 \[ \frac{\partial}{\partial x_i} ( f_i(x_i) \otimes g_i(z) ) = x_i  \frac{\partial z}{\partial x_i} + z  \frac{\partial x_i}{\partial x_i} = 0 + z = z \]
-因此，$\frac{\partial}{\partial \mathbf{x}} ( \mathbf{x} z ) = diag(\vec{1}  z) = I z$。
+因此，$\frac{\partial}{\partial \mathbf{x}} ( \mathbf{x} z ) = \mathrm{diag}(\vec{1}  z) = I z$。
 
 关于标量参数 $z$ 的偏导数是一个垂直向量，其元素为：
 \[ \frac{\partial}{\partial z} ( f_i(x_i) \otimes g_i(z) ) = x_i \frac{\partial z}{\partial z} + z \frac{\partial x_i}{\partial z} = x_i + 0 = x_i \]
@@ -644,7 +645,7 @@ $\frac{dy}{dx} = \frac{du}{dx}\frac{dy}{du}$ & $\frac{dy}{dx} = \frac{dy}{du} \f
 \begin{array}{lllllllll}
  \frac{\partial u_1(x)}{\partial x} &=& 2x &&&(\text{与 }\frac{du_1(x)}{dx}\text{相同})\\
  \frac{\partial u_2(x,u_1)}{\partial u_1} &=& \frac{\partial }{\partial u_1}(x + u_1) = 0 + 1 = 1\\
- \frac{\partial u_2(x,u_1)}{\partial x} &\includegraphics{fig/not-equal-icon.png}& \frac{\partial }{\partial x}(x + u_1) = 1 + 0 = 1 & & &(\text{这里有点不对劲!})
+ \frac{\partial u_2(x,u_1)}{\partial x} & \neq & \frac{\partial }{\partial x}(x + u_1) = 1 + 0 = 1 & & &(\text{这里有点不对劲!})
 \end{array}
 \]
 哦不！偏导数 $\frac{\partial u_2(x,u_1)}{\partial x}$ 是错的，因为它违反了偏导数的一个关键假设。在对 $x$ 求偏导数时，其他变量必须不随 $x$ 变化。显然，$u_1(x) = x^2$ 是 $x$ 的函数，并且会随着 $x$ 变化。$\frac{\partial u_2(x,u_1)}{\partial x} \neq 1 + 0$ 因为 $\frac{\partial u_1(x)}{\partial x} \neq 0$。快速看一下 $y = u_2(x,u_1)$ 的数据流图，可以看到从 $x$ 到 $y$ 有多个路径，显然需要考虑 $x$ 的直接和间接（通过 $u_1(x)$）依赖：
@@ -889,7 +890,7 @@ f_2(\mathbf{g})\\
 \section{神经元激活的梯度}\label{sec5}
 
 我们现在有了所有需要的部件，可以计算典型神经元激活对于单个神经网络计算单元的模型参数 $\mathbf{w}$ 和 $b$ 的导数：
-\[ \text{activation}(\mathbf{x}) = \max(0, \mathbf{w} \cdot \mathbf{x} + b) \]
+\[ \mathrm{activation}(\mathbf{x}) = \max(0, \mathbf{w} \cdot \mathbf{x} + b) \]
 （这表示一个具有全连接权重和修正线性单元激活的神经元。不过，还有其他的仿射函数，如卷积，以及其他激活函数，如指数线性单元，其逻辑类似。）
 
 我们先不考虑 $\max$，而是专注于计算 $\frac{\partial}{\partial \mathbf{w}} (\mathbf{w} \cdot \mathbf{x} + b)$ 和 $\frac{\partial}{\partial b} (\mathbf{w} \cdot \mathbf{x} + b)$。（回想一下，神经网络通过优化权重和偏置来进行学习。）我们还没有讨论点积的导数，$y = \mathbf{f(w)} \cdot \mathbf{g(x)}$，但可以使用链式法则来避免记忆另一个规则。（注意符号 $y$ 而不是 $\mathbf{y}$，因为结果是一个标量而不是向量。）
@@ -960,25 +961,25 @@ f_2(\mathbf{g})\\
     \frac{\partial}{\partial x_n} \max(0,x_n)
 \end{bmatrix}
 \]
-为了得到激活函数 $activation(\mathbf{x})$ 的导数，我们需要链式法则，因为有嵌套的子表达式 $\mathbf{w} \cdot \mathbf{x} + b$。按照我们的过程，引入中间标量变量 $z$ 来表示仿射函数：
+为了得到激活函数 $\mathrm{activation}(\mathbf{x})$ 的导数，我们需要链式法则，因为有嵌套的子表达式 $\mathbf{w} \cdot \mathbf{x} + b$。按照我们的过程，引入中间标量变量 $z$ 来表示仿射函数：
 \[ z(\mathbf{w},b,\mathbf{x}) = \mathbf{w} \cdot \mathbf{x} + b \]
-\[ activation(z) = \max(0,z) \]
+\[ \mathrm{activation}(z) = \max(0,z) \]
 向量链式法则告诉我们：
-\[\frac{\partial activation}{\partial \mathbf{w}} = \frac{\partial activation}{\partial z} \frac{\partial z}{\partial \mathbf{w}}\]
+\[\frac{\partial \mathrm{activation}}{\partial \mathbf{w}} = \frac{\partial \mathrm{activation}}{\partial z} \frac{\partial z}{\partial \mathbf{w}}\]
 可以重写为：
-\[\frac{\partial activation}{\partial \mathbf{w}} = \begin{cases}
+\[\frac{\partial \mathrm{activation}}{\partial \mathbf{w}} = \begin{cases}
 	0 \frac{\partial z}{\partial \mathbf{w}} = \vec{0}^T & z \leq 0 \\
 	1 \frac{\partial z}{\partial \mathbf{w}} = \frac{\partial z}{\partial \mathbf{w}} = \mathbf{x}^T & z > 0 \quad (\text{我们之前计算过 } \frac{\partial z}{\partial \mathbf{w}} = \mathbf{x}^T) \\
 \end{cases}\]
 然后代入 $z = \mathbf{w} \cdot \mathbf{x} + b$：
-\[\frac{\partial activation}{\partial \mathbf{w}} = \begin{cases}
+\[\frac{\partial \mathrm{activation}}{\partial \mathbf{w}} = \begin{cases}
 	\vec{0}^T & \mathbf{w} \cdot \mathbf{x} + b \leq 0 \\
 	\mathbf{x}^T & \mathbf{w} \cdot \mathbf{x} + b > 0
 \end{cases}\]
 这个方程符合我们的直觉。当激活函数将仿射函数输出 $z$ 截断为 0 时，关于任何权重 $w_i$ 的导数为零。当 $z > 0$ 时，好像 $max$ 函数消失了，我们只得到 $z$ 关于权重的导数。
 
 接下来是神经元激活关于 $b$ 的导数：
-\[\frac{\partial activation}{\partial b} = \begin{cases}
+\[\frac{\partial \mathrm{activation}}{\partial b} = \begin{cases}
 	0 \frac{\partial z}{\partial b} = 0 & \mathbf{w} \cdot \mathbf{x} + b \leq 0 \\
 	1 \frac{\partial z}{\partial b} = 1 & \mathbf{w} \cdot \mathbf{x} + b > 0
 \end{cases}\]
@@ -992,7 +993,7 @@ f_2(\mathbf{g})\\
 其中 $N=|X|$，然后设
 \[ \mathbf{y} = [\text{target}(\mathbf{x}_1), \text{target}(\mathbf{x}_2), \ldots, \text{target}(\mathbf{x}_N)]^T \]
 其中 $y_i$ 是一个标量。于是代价方程变为：
-\[ C(\mathbf{w},b,X,\mathbf{y}) = \frac{1}{N} \sum_{i=1}^{N} (y_i - \text{activation}(\mathbf{x}_i))^2 = \frac{1}{N} \sum_{i=1}^{N} (y_i - \max(0, \mathbf{w}\cdot\mathbf{x}_i+b))^2 \]
+\[ C(\mathbf{w},b,X,\mathbf{y}) = \frac{1}{N} \sum_{i=1}^{N} (y_i - \mathrm{activation}(\mathbf{x}_i))^2 = \frac{1}{N} \sum_{i=1}^{N} (y_i - \max(0, \mathbf{w}\cdot\mathbf{x}_i+b))^2 \]
 按照我们的链式法则过程，引入这些中间变量：
 \[
 \begin{array}{lllllllll} 
@@ -1178,7 +1179,7 @@ f_2(\mathbf{g})\\
 \]
 在约束条件（逐元素对角条件）下，即 $f_i(\mathbf{w})$ 和 $g_i(\mathbf{x})$ 最多访问 $w_i$ 和 $x_i$，雅可比矩阵简化为对角矩阵：
 \[
-\frac{\partial \mathbf{y}}{\partial \mathbf{w}} = diag \left( \frac{\partial}{\partial w_1}(f_{1}(w_1) \bigcirc g_{1}(x_1)),~ \frac{\partial}{\partial w_2}(f_{2}(w_2) \bigcirc g_{2}(x_2)),~ \ldots,~ \frac{\partial}{\partial w_n}(f_{n}(w_n) \bigcirc g_{n}(x_n)) \right)
+\frac{\partial \mathbf{y}}{\partial \mathbf{w}} = \mathrm{diag} \left( \frac{\partial}{\partial w_1}(f_{1}(w_1) \bigcirc g_{1}(x_1)),~ \frac{\partial}{\partial w_2}(f_{2}(w_2) \bigcirc g_{2}(x_2)),~ \ldots,~ \frac{\partial}{\partial w_n}(f_{n}(w_n) \bigcirc g_{n}(x_n)) \right)
 \]
 以下是一些逐元素运算的示例：
 \[
@@ -1186,8 +1187,8 @@ f_2(\mathbf{g})\\
  \text{\bf 运算} & \text{\bf 关于 } \mathbf{w} \text{ 的偏导数} & \text{\bf 关于 } \mathbf{x} \text{ 的偏导数}\\
  + & \frac{\partial (\mathbf{w}+\mathbf{x})}{\partial \mathbf{w}} = I & \frac{\partial (\mathbf{w}+\mathbf{x})}{\partial \mathbf{x}} =  I\\
  - & \frac{\partial (\mathbf{w}-\mathbf{x})}{\partial \mathbf{w}}  = I & \frac{\partial (\mathbf{w}-\mathbf{x})}{\partial \mathbf{x}}  = -I \\
- \otimes & \frac{\partial (\mathbf{w} \otimes \mathbf{x})}{\partial \mathbf{w}}  =  diag(\mathbf{x}) & \frac{\partial (\mathbf{w} \otimes \mathbf{x})}{\partial \mathbf{x}}  =  diag(\mathbf{w})\\
- \oslash & \frac{\partial (\mathbf{w} \oslash \mathbf{x})}{\partial \mathbf{w}}  =  diag(\ldots \frac{1}{x_i} \ldots) & \frac{\partial (\mathbf{w} \oslash \mathbf{x})}{\partial \mathbf{x}}  =  diag(\ldots \frac{-w_i}{x_i^2} \ldots)\\
+ \otimes & \frac{\partial (\mathbf{w} \otimes \mathbf{x})}{\partial \mathbf{w}}  =  \mathrm{diag}(\mathbf{x}) & \frac{\partial (\mathbf{w} \otimes \mathbf{x})}{\partial \mathbf{x}}  =  \mathrm{diag}(\mathbf{w})\\
+ \oslash & \frac{\partial (\mathbf{w} \oslash \mathbf{x})}{\partial \mathbf{w}}  =  \mathrm{diag}(\ldots \frac{1}{x_i} \ldots) & \frac{\partial (\mathbf{w} \oslash \mathbf{x})}{\partial \mathbf{x}}  =  \mathrm{diag}(\ldots \frac{-w_i}{x_i^2} \ldots)\\
 \end{array}
 \]
 
@@ -1195,7 +1196,7 @@ f_2(\mathbf{g})\\
 
 将标量 $z$ 加到向量 $\mathbf{x}$ 上，即 $\mathbf{y} = \mathbf{x} + z$，实际上是 $\mathbf{y} = \mathbf{f(x)} + \mathbf{g}(z)$，其中 $\mathbf{f(x)} = \mathbf{x}$ 和 $\mathbf{g}(z) = \vec{1} z$。
 \[
-\frac{\partial}{\partial \mathbf{x}} ( \mathbf{x} + z ) = diag(\vec{1}) = I
+\frac{\partial}{\partial \mathbf{x}} ( \mathbf{x} + z ) = \mathrm{diag}(\vec{1}) = I
 \]
 \[
 \frac{\partial}{\partial z} ( \mathbf{x} + z ) = \vec{1}
@@ -1253,7 +1254,7 @@ $\sum_{i=a}^b x_i$ 表示一个从 $a$ 到 $b$ 对 $x_i$ 求和的 for 循环。
 
 $I$ 表示适当维度的单位矩阵，其非对角线元素均为零，而对角线元素均为 1。
 
-$diag(\mathbf{x})$ 表示一个以向量 $\mathbf{x}$ 的元素为对角线元素的矩阵。
+$\mathrm{diag}(\mathbf{x})$ 表示一个以向量 $\mathbf{x}$ 的元素为对角线元素的矩阵。
 
 点积 $\mathbf{w} \cdot \mathbf{x}$ 表示元素对应相乘后再求和，即 $\sum_i^n (w_i x_i) = sum(\mathbf{w} \otimes \mathbf{x})$。也可以看作 $w^T x$。
 
@@ -1302,10 +1303,5 @@ Wikipedia 的词条实际上相当好，他们对不同的布局约定有很好�
 对于那些特别感兴趣卷积神经网络的人，可以查看 \href{https://arxiv.org/pdf/1603.07285.pdf}{深度学习卷积算术指南}。
 
 我们引用了 \href{https://en.wikipedia.org/wiki/Total_derivative}{全导数} 的法则，这是一个重要的概念，意思是关于 $x$ 的导数必须考虑所有依赖于 $x$ 的变量关于 $x$ 的导数。
-
-本文使用deepseek于2024.12.11翻译，翻译后的latex源代码见于\href{https://github.com/xunbu/The-Matrix-Calculus-You-Need-For-Deep-Learning-zh}{https://github.com/xunbu/The-Matrix-Calculus-You-Need-For-Deep-Learning-zh}
-
-
-
 
 \end{document}
